@@ -1,0 +1,52 @@
+
+name: PC Virtual Ubuntu
+
+on:
+  workflow_dispatch:
+
+jobs:
+  desktop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Baixar repositorio
+        uses: actions/checkout@v4
+
+      - name: Atualizar sistema
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade -y
+
+      - name: Instalar desktop
+        run: |
+          sudo apt-get install -y xfce4
+          sudo apt-get install -y xfce4-terminal
+          sudo apt-get install -y dbus-x11
+
+      - name: Instalar VNC
+        run: |
+          sudo apt-get install -y \
+            tigervnc-standalone-server \
+            tigervnc-tools
+
+      - name: Instalar acesso web
+        run: |
+          sudo apt-get install -y \
+            novnc \
+            websockify
+
+      - name: Conferir instalacao
+        run: |
+          echo "Ubuntu instalado"
+          echo "XFCE instalado"
+          echo "VNC instalado"
+          echo "noVNC instalado"
+          echo "Ambiente preparado"
+
+      - name: Informacoes do sistema
+        run: |
+          uname -a
+          df -h
+          free -h
+          echo "Configuracao concluida"
